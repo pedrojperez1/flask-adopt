@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Pet Details{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="display-3 mb-3">Pet Details</div>
+    <div class="row">
+        <div class="col text-center">
+            <p class="h4">Name: <b>{{pet.name}}</b></p>
+            <p class="h4">Species: <b>{{pet.species}}</b></p>
+            <p class="h4">Age: <b>{% if pet.age %}{{pet.age}}{% endif %}</b></p>
+        </div>
+        <div class="col mx-auto">
+            <img class="img-thumbnail" src="{{pet.photo_url}}" alt="">
+        </div>
+    </div>
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        <div class="form-group">
+            {{field.label}}
+            {{field(class_="form-control")}}
+            {% for err in field.errors %}
+            <small class="form-text text-danger">{{err}}</small>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <button class="btn btn-success">Update</button>
+        <a href="/" class="btn btn-light">Cancel</a>
+    </form>
+</div>
+{% endblock %}
